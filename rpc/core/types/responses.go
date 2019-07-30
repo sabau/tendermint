@@ -205,7 +205,9 @@ type (
 	ResultUnsafeProfile      struct{}
 	ResultSubscribe          struct{}
 	ResultUnsubscribe        struct{}
-	ResultHealth             struct{}
+
+	// Empty struct that represent healthy system
+	ResultHealth struct{}
 )
 
 // Event data from a subscription

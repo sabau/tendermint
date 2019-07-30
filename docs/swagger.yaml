@@ -1,0 +1,50 @@
+basePath: /
+host: localhost:26657
+info:
+  contact:
+    name: Tendermint
+    url: https://github.com/tendermint/tendermint/issues
+  description: RPC documentation
+  license:
+    name: Apache 2.0
+    url: https://github.com/tendermint/tendermint/blob/master/LICENSE
+  title: Tendermint RPC
+  version: "1.0"
+paths:
+  /block:
+    get:
+      description: Get block at a given height. If no height is provided, it will
+        fetch the latest block.
+      parameters:
+      - description: height to be fetched, if empty the default is the latest
+        in: query
+        name: height
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Block representation
+          schema:
+            $ref: '#/definitions/github.com/tendermint/tendermint/rpc/core/types.ResultBlock'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/error'
+            type: object
+      summary: Get block at a given height.
+  /health:
+    get:
+      description: Get node health. Returns empty result (200 OK) on success, no response
+        in case of an error
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: result will be empty
+          schema:
+            $ref: '#/definitions/github.com/tendermint/tendermint/rpc/core/types.ResultHealth'
+            type: object
+      summary: Get node health
+swagger: "2.0"

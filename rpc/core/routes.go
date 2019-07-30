@@ -4,6 +4,19 @@ import (
 	rpc "github.com/tendermint/tendermint/rpc/lib/server"
 )
 
+// @title Tendermint RPC
+// @version 1.0
+// @description RPC documentation
+
+// @contact.name Tendermint
+// @contact.url https://github.com/tendermint/tendermint/issues
+
+// @license.name Apache 2.0
+// @license.url https://github.com/tendermint/tendermint/blob/master/LICENSE
+
+// @host localhost:26657
+// @BasePath /
+
 // TODO: better system than "unsafe" prefix
 // NOTE: Amino is registered in rpc/core/types/wire.go.
 var Routes = map[string]*rpc.RPCFunc{

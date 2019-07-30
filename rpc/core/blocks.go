@@ -227,6 +227,14 @@ func filterMinMax(height, min, max, limit int64) (int64, int64, error) {
 //   "jsonrpc": "2.0"
 // }
 // ```
+
+// @Summary Get block at a given height.
+// @Description Get block at a given height. If no height is provided, it will fetch the latest block.
+// @Produce json
+// @Param height query int false "height to be fetched, if empty the default is the latest"
+// @Success 200 {object} github.com/tendermint/tendermint/rpc/core/types.ResultBlock "Block representation"
+// @Failure 500 {object} error
+// @Router /block [get]
 func Block(ctx *rpctypes.Context, heightPtr *int64) (*ctypes.ResultBlock, error) {
 	storeHeight := blockStore.Height()
 	height, err := getHeight(storeHeight, heightPtr)
