@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"time"
 
+	rpctypes "github.com/tendermint/tendermint/rpc/lib/types"
+
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/crypto"
 	cmn "github.com/tendermint/tendermint/libs/common"
@@ -195,17 +197,32 @@ type ResultABCIQuery struct {
 }
 
 // Result of broadcasting evidence
+// swagger:model ResultBroadcastEvidence
 type ResultBroadcastEvidence struct {
 	Hash []byte `json:"hash"`
 }
 
 // empty results
 type (
+	// Dummy struct to represent an ACK
+	// swagger:model ResultUnsafeFlushMempool
 	ResultUnsafeFlushMempool struct{}
-	ResultUnsafeProfile      struct{}
-	ResultSubscribe          struct{}
-	ResultUnsubscribe        struct{}
-	ResultHealth             struct{}
+
+	// Dummy struct to represent an ACK
+	// swagger:model ResultUnsafeProfile
+	ResultUnsafeProfile struct{}
+
+	// Dummy struct to represent an ACK
+	// swagger:model ResultSubscribe
+	ResultSubscribe struct{}
+
+	// Dummy struct to represent an ACK
+	// swagger:model ResultUnsubscribe
+	ResultUnsubscribe struct{}
+
+	// Dummy struct to represent a healthy node
+	// swagger:model ResultHealth
+	ResultHealth struct{}
 )
 
 // Event data from a subscription
@@ -213,4 +230,18 @@ type ResultEvent struct {
 	Query  string              `json:"query"`
 	Data   types.TMEventData   `json:"data"`
 	Events map[string][]string `json:"events"`
+}
+
+// Response from health request
+// swagger:response ResponseResultHealth
+type RPCResponseResultHealth struct {
+	rpctypes.RPCPartialResponse
+	Response ResultHealth
+}
+
+// Result of broadcasting evidence
+// swagger:response ResponseResultBroadcastEvidence
+type RPCResponseResultBroadcastEvidence struct {
+	rpctypes.RPCPartialResponse
+	Response ResultBroadcastEvidence
 }

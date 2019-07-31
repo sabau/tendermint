@@ -145,11 +145,19 @@ func (err RPCError) Error() string {
 	return fmt.Sprintf(baseFormat, err.Code, err.Message)
 }
 
+// Standard response, Result type depends on specific call
+//
+// swagger:model
+type RPCPartialResponse struct {
+	JSONRPC string    `json:"jsonrpc"`
+	ID      jsonrpcid `json:"id"`
+	Error   *RPCError `json:"error,omitempty"`
+}
+
+// swagger:response RPCResponse
 type RPCResponse struct {
-	JSONRPC string          `json:"jsonrpc"`
-	ID      jsonrpcid       `json:"id"`
-	Result  json.RawMessage `json:"result,omitempty"`
-	Error   *RPCError       `json:"error,omitempty"`
+	RPCPartialResponse
+	Result json.RawMessage `json:"result,omitempty"`
 }
 
 // UnmarshalJSON custom JSON unmarshalling due to jsonrpcid being string or int
@@ -190,14 +198,24 @@ func NewRPCSuccessResponse(cdc *amino.Codec, id jsonrpcid, res interface{}) RPCR
 		rawMsg = json.RawMessage(js)
 	}
 
-	return RPCResponse{JSONRPC: "2.0", ID: id, Result: rawMsg}
+	rpcPartialResponse := RPCPartialResponse{
+		JSONRPC: "2.0",
+		ID:      id,
+	}
+	return RPCResponse{
+		RPCPartialResponse: rpcPartialResponse,
+		Result:             rawMsg,
+	}
 }
 
 func NewRPCErrorResponse(id jsonrpcid, code int, msg string, data string) RPCResponse {
-	return RPCResponse{
+	rpcPartialResponse := RPCPartialResponse{
 		JSONRPC: "2.0",
 		ID:      id,
 		Error:   &RPCError{Code: code, Message: msg, Data: data},
+	}
+	return RPCResponse{
+		RPCPartialResponse: rpcPartialResponse,
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	rpc "github.com/tendermint/tendermint/rpc/lib/server"
 )
 
+//go:generate swagger generate spec
 // TODO: better system than "unsafe" prefix
 // NOTE: Amino is registered in rpc/core/types/wire.go.
 var Routes = map[string]*rpc.RPCFunc{

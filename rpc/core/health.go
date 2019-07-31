@@ -32,6 +32,25 @@ import (
 // 	"jsonrpc": "2.0"
 // }
 // ```
+
+// swagger:route GET /health health Health
+//
+// Get node health.
+//
+// Returns empty result (200 OK) on success, no response - in
+// case of an error.
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+//
+//     Schemes: http, https
+//
+//     Responses:
+//       200: ResponseResultHealth
+//       500: ResponseResultHealth
 func Health(ctx *rpctypes.Context) (*ctypes.ResultHealth, error) {
 	return &ctypes.ResultHealth{}, nil
 }
